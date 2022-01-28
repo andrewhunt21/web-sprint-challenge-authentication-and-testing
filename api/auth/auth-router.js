@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs')
 const { 
   validateUser,
   checkUsernameFree,
+  checkUsernameExists
 } = require('../middleware/auth-middleware');
 
 router.post('/register', validateUser, checkUsernameFree, (req, res, next) => {
@@ -43,7 +44,7 @@ router.post('/register', validateUser, checkUsernameFree, (req, res, next) => {
     .catch(next)
 });
 
-router.post('/login', validateUser, (req, res, next) => {
+router.post('/login', validateUser, checkUsernameExists, (req, res, next) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -69,7 +70,7 @@ router.post('/login', validateUser, (req, res, next) => {
   */
   if (bcrypt.compareSync(req.body.password, req.user.password)) {
     const token = buildToken(req.user)
-    res.status(201).json({
+    res.status(200).json({
       message: `welcome, ${req.user.username}`,
       token
     })
