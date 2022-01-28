@@ -3,7 +3,7 @@ const User = require('../users/users-model')
 const { 
   validateUser,
   checkUsernameFree,
-} = require('../middleware/restricted')
+} = require('../middleware/auth-middleware')
 
 router.post('/register', validateUser, checkUsernameFree, (req, res, next) => {
   /*
@@ -34,8 +34,8 @@ router.post('/register', validateUser, checkUsernameFree, (req, res, next) => {
   const { username, password } = req.body
   const hash = bcrypt.hashSync(password, 8)
   User.add({ username, password: hash })
-    .then(saved => {
-      res.status(201).json(saved)
+    .then(newUser => {
+      res.status(201).json(newUser)
     })
     .catch(next)
 });

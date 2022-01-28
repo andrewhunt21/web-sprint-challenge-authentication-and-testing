@@ -1,6 +1,5 @@
 const { JWT_SECRET } = require('../secrets')
 const jwt = require('jsonwebtoken')
-const User = require('../users/users-model')
 
 const restricted = (req, res, next) => {
   const token = req.headers.authorization
@@ -17,33 +16,8 @@ const restricted = (req, res, next) => {
   })
 }
 
-function validateUser(req, res, next) {
-  const { username, password } = req.body
-  if (!username || !username.trim() || !password || !password.trim()) {
-    res.status(400).json({ 
-      message: 'username and password required'
-    })
-  } else {
-    req.username = username.trim()
-    req.password = password.trim()
-    next()
-  }
-}
-
-async function checkUsernameFree(req, res, next) {
-  try {
-    const users = await User.findBy({ username: req.body.username })
-    if (!users.length) next()
-    else next({ status: 422, username: 'username taken' })
-  } catch (err) {
-    next(err)
-  }
-}
-
-module.exports = {
-  restricted,
-  validateUser,
-  checkUsernameFree
+module.exports = (req, res, next) => {
+  restricted
   /*
     IMPLEMENT
 

@@ -12,4 +12,3 @@ beforeAll(async () => {
   await db.migrate.latest()
 })
 
-describe('')
