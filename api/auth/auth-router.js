@@ -37,8 +37,12 @@ router.post('/register', validateUser, checkUsernameFree, (req, res, next) => {
   const { username, password } = req.body
   const hash = bcrypt.hashSync(password, 8)
   User.add({ username, password: hash })
-    .then(newUser => {
-      res.status(201).json(newUser)
+    .then(() => {
+      res.status(201).json({
+        id: req.user.id,
+        username: req.user.username,
+        password: password
+      })
     })
     .catch(next)
 });
@@ -69,7 +73,7 @@ router.post('/login', validateUser, (req, res, next) => {
   */
   if (bcrypt.compareSync(req.body.password, req.user.password)) {
     const token = buildToken(req.user)
-    res.json({
+    res.status(201).json({
       message: `welcome, ${req.user.username}`,
       token
     })
