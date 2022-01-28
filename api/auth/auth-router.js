@@ -37,12 +37,8 @@ router.post('/register', validateUser, checkUsernameFree, (req, res, next) => {
   const { username, password } = req.body
   const hash = bcrypt.hashSync(password, 8)
   User.add({ username, password: hash })
-    .then(() => {
-      res.status(201).json({
-        id: req.user.id,
-        username: req.user.username,
-        password: password
-      })
+    .then(newUser => {
+      res.status(201).json(newUser)
     })
     .catch(next)
 });

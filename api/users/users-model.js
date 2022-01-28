@@ -10,7 +10,7 @@ function findBy(filter) {
 
 function findById(user_id) {
     return db('users')
-        .where('user_id', user_id).first()
+        .where('id', user_id).first()
 }
 
 async function add(user) {
