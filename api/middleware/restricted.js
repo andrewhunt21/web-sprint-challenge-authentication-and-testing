@@ -40,7 +40,7 @@ async function checkUsernameFree(req, res, next) {
   }
 }
 
-module.exports = (req, res, next) => {
+module.exports = {
   restricted,
   validateUser,
   checkUsernameFree
