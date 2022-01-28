@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../users/users-model')
+const bcrypt = require('bcryptjs')
 const { 
   validateUser,
   checkUsernameFree,
