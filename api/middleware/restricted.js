@@ -1,7 +1,7 @@
 const { JWT_SECRET } = require('../secrets')
 const jwt = require('jsonwebtoken')
 
-const restricted = (req, res, next) => {
+module.exports = (req, res, next) => {
   const token = req.headers.authorization
   if (!token) {
     return next({ status: 401, message: 'token required' })
@@ -14,10 +14,6 @@ const restricted = (req, res, next) => {
       next()
     }
   })
-}
-
-module.exports = (req, res, next) => {
-  restricted
   /*
     IMPLEMENT
 
