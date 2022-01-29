@@ -51,3 +51,36 @@ describe('Post /login', () => {
     expect(res.body.token).toBeDefined()
   })
 })
+
+// let token = null
+// beforeAll(async () => {
+// request(server)
+//   request(server)
+//     .post('/api/auth/regist')
+//     .send({
+//       username: 'testUser',
+//       password: '1234'
+//     })
+//     .post('/api/auth/login')
+//     .send({
+//       username: 'testUser',
+//       password: '1234'
+//     })
+//     .end((err, response) => {
+//       token = response.body.token
+//     })
+// })
+
+describe('Get /jokes', () => {
+  test('jokes are restricted without token', async () => {
+    const res = await request(server)
+      .get('/api/jokes')
+    expect(res.body.message).toBe('token required')
+  })
+  // test('returns jokes when authorized', async () => {
+  //   const res = await request(server)
+  //     .get('/api/jokes')
+  //     .set('Authorization', 'Bearer ' + token)
+  //   expect(res.status).toBe(200)
+  // })
+})
