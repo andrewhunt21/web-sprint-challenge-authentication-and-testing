@@ -8,8 +8,6 @@ function validateUser(req, res, next) {
       message: 'username and password required'
     })
   } else {
-    // req.username = username.trim()
-    // req.password = password
     next()
   }
 }
